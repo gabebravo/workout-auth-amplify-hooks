@@ -1,28 +1,86 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
+import Dashboard from './views/Dashboard';
+import NotSignedIn from './shared/NotSignedIn';
 
-class App extends Component {
+import {
+  withRouter,
+  Switch,
+  Route,
+  Redirect,
+  BrowserRouter as Router
+} from 'react-router-dom'
+
+import { Auth } from 'aws-amplify'
+
+class PrivateRoute extends React.Component {
+
+  state = {
+    loaded: false,
+    isAuthenticated: false
+  }
+
+  componentDidMount() {
+    this.authenticate()
+    this.unlisten = this.props.history.listen(() => {
+      Auth.currentAuthenticatedUser()
+        .then(user => console.log('user: ', user))
+        .catch(() => {
+          if (this.state.isAuthenticated) this.setState({ isAuthenticated: false })
+        })
+    });
+  }
+
+  componentWillUnmount() {
+    this.unlisten()
+  }
+
+  authenticate() {
+    Auth.currentAuthenticatedUser()
+      .then(() => {
+        this.setState({ loaded: true, isAuthenticated: true })
+      })
+      .catch(() => this.props.history.push('/not-signed-in'))
+  }
+
   render() {
+
+    const { component: Component, ...rest } = this.props
+    const { loaded , isAuthenticated} = this.state
+
+    if (!loaded) return null
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+      <Route
+        {...rest}
+        render={props => {
+          return isAuthenticated ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/signin",
+              }}
+            />
+          )
+        }}
+      />
+    )
+
   }
 }
 
-export default App;
+PrivateRoute = withRouter(PrivateRoute)
+
+const App = () => (
+  <Router>
+    <Switch>
+      <Route path='/signup' component={SignUp} />
+      <Route path='/signin' component={SignIn} />
+      <Route path='/not-signed-in' component={NotSignedIn} />
+      <PrivateRoute path='/dashboard' component={Dashboard} />
+    </Switch>
+  </Router>
+)
+
+export default App
