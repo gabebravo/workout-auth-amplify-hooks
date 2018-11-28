@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import config from './aws-exports';
 import Amplify from 'aws-amplify';
 
-// import AWSAppSyncClient from "aws-appsync";
-// import { Rehydrated } from 'aws-appsync-react';
-// import { ApolloProvider } from 'react-apollo';
-// import appSyncConfig from './appsync';
+import AWSAppSyncClient from "aws-appsync";
+import { Rehydrated } from 'aws-appsync-react';
+import { ApolloProvider } from 'react-apollo';
+import appSyncConfig from './appsync';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import cyan from '@material-ui/core/colors/cyan';
@@ -43,34 +43,28 @@ const theme = createMuiTheme({
     },
   },
 });
-  
-  const WithProvider = () => (
-    <MuiThemeProvider theme={theme}>
-        <App />
-    </MuiThemeProvider>
-  );
 
-// const client = new AWSAppSyncClient({
-//   url: appSyncConfig.graphqlEndpoint,
-//   region: appSyncConfig.region,
-//   auth: {
-//     type: appSyncConfig.authenticationType,
-//     apiKey: appSyncConfig.apiKey,
-//   },
-//   disableOffline: true,
-//   connectToDevTools: true
-// });
+const client = new AWSAppSyncClient({
+  url: appSyncConfig.graphqlEndpoint,
+  region: appSyncConfig.region,
+  auth: {
+    type: appSyncConfig.authenticationType,
+    apiKey: appSyncConfig.apiKey,
+  },
+  disableOffline: true,
+  connectToDevTools: true
+});
 
-// const WithProvider = () => (
-//   <ApolloProvider client={client}>
-//     <Rehydrated>
-//       <MuiThemeProvider theme={theme}>
-//         <React.Fragment>
-//           <App />
-//         </React.Fragment>
-//       </MuiThemeProvider>
-//     </Rehydrated>
-//   </ApolloProvider>
-// );
+const WithProvider = () => (
+  <ApolloProvider client={client}>
+    <Rehydrated>
+      <MuiThemeProvider theme={theme}>
+        <React.Fragment>
+          <App />
+        </React.Fragment>
+      </MuiThemeProvider>
+    </Rehydrated>
+  </ApolloProvider>
+);
 
 ReactDOM.render(<WithProvider />, document.getElementById('root'));

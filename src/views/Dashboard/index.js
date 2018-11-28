@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withStyles } from '@material-ui/core/styles'
-// import { Query } from 'react-apollo'
-// import { getUserWorkouts } from '../../queries';
+import { Query } from 'react-apollo'
+import { getUserWorkouts } from '../../queries';
 // import { Mutation } from 'react-apollo'
 // import { ADD_WORKOUT } from '../../mutations';
 import Button from '@material-ui/core/Button';
@@ -35,9 +35,12 @@ class Dashboard extends Component {
 
   render() {
     const { classes } = this.props
+    
     return (
-      // <Query query={getUserWorkouts} variables={{ id: match.params.userId }}>
-      //   {({ data }) => (
+      <Query query={getUserWorkouts} variables={{ id: 'a8d47fcd-f05a-4232-8518-2989ca93c92c' }}>
+        {({ data }) => {
+          console.log('data', data)
+          return (
           <div>
             {/* <Header user={match.params.userId} /> */}
             <Header />
@@ -83,8 +86,8 @@ class Dashboard extends Component {
               //   </div>
             }
           </div>
-      //   )}
-      // </Query>
+        )}}
+      </Query>
     )
   }
 }
