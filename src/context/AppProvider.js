@@ -2,6 +2,10 @@ import React from "react";
 import { useImmerReducer } from "use-immer";
 import { AppContext } from "./AppContext";
 
+/* IMMER MAGIC - USING REACT HOOKS + USEREDUCER :
+    https://github.com/mweststrate/use-immer
+    https://github.com/mweststrate/use-immer/blob/master/index.js */
+
 const DEFAULT_VALUES = {
     userId: null,
     workoutId: null,
