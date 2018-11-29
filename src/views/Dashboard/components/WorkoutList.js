@@ -9,7 +9,7 @@ import WorkoutInfo from './WorkoutInfo'
 import { withRouter } from 'react-router';
 import compose from 'recompose/compose';
 import shortid from 'shortid';
-import moment from 'moment'
+import moment from 'moment';
 
 const styles = theme => ({
   root: {
@@ -55,6 +55,7 @@ class WorkoutList extends Component {
   }
 
   workoutNav = id => {
+    
     this.props.history.push(`/workout/${id}`);
   }
 

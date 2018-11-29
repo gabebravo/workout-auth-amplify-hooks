@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 import Dashboard from './views/Dashboard';
+import Workout from './views/Workout';
 import NotSignedIn from './shared/NotSignedIn';
 
 import {
@@ -79,6 +80,7 @@ const App = () => (
       <Route path='/signin' component={SignIn} />
       <Route path='/not-signed-in' component={NotSignedIn} />
       <PrivateRoute path='/dashboard' component={Dashboard} />
+      <PrivateRoute path='/workout/:workoutId' component={Workout} />
     </Switch>
   </Router>
 )
