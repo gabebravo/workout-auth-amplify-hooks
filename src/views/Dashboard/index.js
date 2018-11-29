@@ -6,9 +6,9 @@ import { getUserWorkouts } from '../../queries';
 // import { ADD_WORKOUT } from '../../mutations';
 import Button from '@material-ui/core/Button';
 import Header from '../../shared/Header';
-// import WorkoutList from './components/WorkoutList';
+import WorkoutList from './components/WorkoutList';
 import LinearProgress from '@material-ui/core/LinearProgress';
-// import moment from 'moment';
+import moment from 'moment';
 import { Auth } from 'aws-amplify'
 import { AppContext } from "../../context/AppContext";
 
@@ -22,35 +22,29 @@ class Dashboard extends Component {
 
   static contextType = AppContext;
 
-  // sortWorkouts = workouts => [...workouts].sort( (a,b) => 
-  // moment.utc(b.date).valueOf() - moment.utc(a.date).valueOf());
+  sortWorkouts = workouts => [...workouts].sort( (a,b) => 
+  moment.utc(b.date).valueOf() - moment.utc(a.date).valueOf());
 
   componentDidMount() {
+    const { dispatch } = this.context;
+
     Auth.currentUserInfo()
-      .then(data => {
-        // TODO - WRITE THE USER DATA TO CACHE >> data.attributes.sub
+      .then( async data => {
+        // ON PAGE REFRESH CHECK FOR DATA WHEN YOU GET HERE
           console.log('userData', data)
-        this.setState({
-          username: data.username
-        })
+          await dispatch({ type: "SET_VALUE", key: 'userId', value: data.attributes.sub } )
+          await dispatch({ type: "SET_VALUE", key: 'username', value: data.username } )
       })
       .catch(err => console.log('error: ', err))
   }
 
-  render() {
-    const { classes } = this.props
-    const { global, dispatch } = this.context;
-
-    console.log('global state', global)
-
-    return (
-      <Query query={getUserWorkouts} variables={{ id: 'a8d47fcd-f05a-4232-8518-2989ca93c92c' }}>
+  renderDashboard = userId => (
+    <Query query={getUserWorkouts} variables={{ id: userId }}>
         {({ data }) => {
           console.log('data', data)
           return (
           <div>
-            {/* <Header user={match.params.userId} /> */}
-            <Header />
+            <Header name={ global.username || '' } />
             <div>
               {/* <Mutation mutation={ADD_WORKOUT}
                 refetchQueries={() => {
@@ -84,19 +78,27 @@ class Dashboard extends Component {
                     Sign Out
                   </Button>
             </div>
-            <Button onClick={ () => dispatch({ type: "SET_VALUE", key: 'userId', value: '1234567' } )}>TEST</Button>
             {
-              // data.listWorkouts && data.listWorkouts.items ? 
-              //   <WorkoutList workouts={ this.sortWorkouts(data.listWorkouts.items) } /> : 
-              //   <div className={classes.root}>
-              //     <LinearProgress color="secondary" /><br />
-              //     <LinearProgress /><br />
-              //   </div>
+              data.listWorkouts && data.listWorkouts.items ? 
+                <WorkoutList workouts={ this.sortWorkouts(data.listWorkouts.items) } /> : 
+                <div className={classes.root}>
+                  <LinearProgress color="secondary" /><br />
+                  <LinearProgress /><br />
+                </div>
             }
           </div>
         )}}
       </Query>
-    )
+  )
+
+  render() {
+    const { classes } = this.props
+    const { global, dispatch } = this.context;
+    const dashboard = global.userId ? this.renderDashboard( global.userId ) : <div>No User Data Found</div>
+
+    console.log('global state', global)
+
+    return dashboard;
   }
 }
 

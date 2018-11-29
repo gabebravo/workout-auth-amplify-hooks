@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Header from './shared/Header';
-// import { withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 const styles = theme => ({
   layout: {
@@ -148,5 +148,4 @@ SignIn.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SignIn);
-// export default withRouter(withStyles(styles)(SignUp));
+export default withRouter(withStyles(styles)(SignIn));

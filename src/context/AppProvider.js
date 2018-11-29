@@ -10,7 +10,8 @@ const DEFAULT_VALUES = {
     userId: null,
     workoutId: null,
     workoutDate: null,
-    exerciseName: null
+    exerciseName: null,
+    username: null,
 }
 
 const globalReducer = (global, action) => {

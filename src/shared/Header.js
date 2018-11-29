@@ -24,18 +24,13 @@ const styles = {
 
 class Header extends Component {
 
-  state = {
-    name: 'Bill'
-  }
-
   homeNav = () => {
     console.log('go home')
     // this.props.history.push('/');
   }
 
   render() {
-    const { classes, user = '' } = this.props
-    const { name } = this.state
+    const { classes, name = null } = this.props;
 
     return (
       <div className={classes.root}>
@@ -47,9 +42,13 @@ class Header extends Component {
             <Typography variant="title" color="inherit" className={classes.grow}>
               Fitness Tracker
             </Typography>
-            <Typography variant="title" color="inherit">
-              <div color="inherit">{ name && `Hello, ${name}` }</div>
-            </Typography>
+            {
+              name ? (
+                <Typography variant="title" color="inherit">
+                  <div color="inherit">{ name && `Hello, ${name}` }</div>
+                </Typography>
+              ) : null
+            }
           </Toolbar>
         </AppBar>
       </div>
