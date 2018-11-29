@@ -1,14 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import { Query } from 'react-apollo'
 import { getUserWorkouts, getWorkoutInfo } from '../../../queries';
-import { Mutation } from 'react-apollo'
-import { DELETE_WORKOUT } from '../../../mutations';
-import { withStyles } from '@material-ui/core/styles'
-import { withWidth } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Paper from "@material-ui/core/Paper";
-import List from "@material-ui/core/List";
-import ListSubheader from "@material-ui/core/ListSubheader";
+// import { Mutation } from 'react-apollo'
+// import { DELETE_WORKOUT } from '../../../mutations';
+import { withStyles, withWidth, Button, Paper, List, ListSubheader } from '@material-ui/core';
 import grey from '@material-ui/core/colors/grey';
 import WorkoutInfo from './WorkoutInfo'
 import { withRouter } from 'react-router';
@@ -90,7 +85,7 @@ class WorkoutList extends Component {
                         <div className={classes.subHeaderButton}>
                           <Button {...buttonProps}
                             onClick={ () => this.addExerciseNav(workout.id, workout.date) }
-                            variant="raised"
+                            variant="contained"
                             color="primary"
                           >Add Exercise</Button>
                         </div>
@@ -98,30 +93,30 @@ class WorkoutList extends Component {
                         { data.listExercises && data.listExercises.items.length > 0 ?
                           <Button {...buttonProps}
                             onClick={ () => this.workoutNav(workout.id) }
-                            variant="raised"
+                            variant="contained"
                             color="primary"
                           >View Details</Button> 
-                          :
-                          <Mutation mutation={DELETE_WORKOUT}
-                            refetchQueries={() => {
-                              return [{ query: getUserWorkouts }];
-                            }}
-                          >
-                            {deleteWorkout => (
-                              <Button {...buttonProps} 
-                                color="primary" 
-                                variant="raised"
-                                onClick={() => deleteWorkout({ 
-                                  variables: {
-                                    input: {
-                                      id: workout.id
-                                    }
-                                  }
-                              })}>
-                                Remove
-                              </Button>
-                            )}
-                          </Mutation>
+                          : null
+                          // <Mutation mutation={DELETE_WORKOUT}
+                          //   refetchQueries={() => {
+                          //     return [{ query: getUserWorkouts }];
+                          //   }}
+                          // >
+                          //   {deleteWorkout => (
+                          //     <Button {...buttonProps} 
+                          //       color="primary" 
+                          //       variant="contained"
+                          //       onClick={() => deleteWorkout({ 
+                          //         variables: {
+                          //           input: {
+                          //             id: workout.id
+                          //           }
+                          //         }
+                          //     })}>
+                          //       Remove
+                          //     </Button>
+                          //   )}
+                          // </Mutation>
                         }
                         </div>
                       </ListSubheader>

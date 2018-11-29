@@ -38,8 +38,12 @@ class Dashboard extends Component {
       .catch(err => console.log('error: ', err))
   }
 
-  renderDashboard = userId => (
-    <Query query={getUserWorkouts} variables={{ id: userId }}>
+  renderDashboard = userId => {
+    const { classes } = this.props
+    const { global } = this.context;
+
+    return (
+      <Query query={getUserWorkouts} variables={{ id: userId }}>
         {({ data }) => {
           console.log('data', data)
           return (
@@ -89,12 +93,13 @@ class Dashboard extends Component {
           </div>
         )}}
       </Query>
-  )
+    )
+}
 
   render() {
     const { classes } = this.props
     const { global, dispatch } = this.context;
-    const dashboard = global.userId ? this.renderDashboard( global.userId ) : <div>No User Data Found</div>
+    const dashboard = global.userId ? this.renderDashboard( global.userId, classes ) : <div>No User Data Found</div>
 
     console.log('global state', global)
 
