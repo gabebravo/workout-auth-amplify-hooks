@@ -10,6 +10,7 @@ import Header from '../../shared/Header';
 import LinearProgress from '@material-ui/core/LinearProgress';
 // import moment from 'moment';
 import { Auth } from 'aws-amplify'
+import { AppContext } from "../../context/AppContext";
 
 const styles = {
   root: {
@@ -19,12 +20,15 @@ const styles = {
 
 class Dashboard extends Component {
 
+  static contextType = AppContext;
+
   // sortWorkouts = workouts => [...workouts].sort( (a,b) => 
   // moment.utc(b.date).valueOf() - moment.utc(a.date).valueOf());
 
   componentDidMount() {
     Auth.currentUserInfo()
       .then(data => {
+        // TODO - WRITE THE USER DATA TO CACHE >> data.attributes.sub
           console.log('userData', data)
         this.setState({
           username: data.username
@@ -35,7 +39,10 @@ class Dashboard extends Component {
 
   render() {
     const { classes } = this.props
-    
+    const { global, dispatch } = this.context;
+
+    console.log('global state', global)
+
     return (
       <Query query={getUserWorkouts} variables={{ id: 'a8d47fcd-f05a-4232-8518-2989ca93c92c' }}>
         {({ data }) => {
@@ -77,6 +84,7 @@ class Dashboard extends Component {
                     Sign Out
                   </Button>
             </div>
+            <Button onClick={ () => dispatch({ type: "SET_VALUE", key: 'userId', value: '1234567' } )}>TEST</Button>
             {
               // data.listWorkouts && data.listWorkouts.items ? 
               //   <WorkoutList workouts={ this.sortWorkouts(data.listWorkouts.items) } /> : 

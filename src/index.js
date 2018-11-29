@@ -11,6 +11,8 @@ import appSyncConfig from './appsync';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import cyan from '@material-ui/core/colors/cyan';
 import deepOrange from '@material-ui/core/colors/deepOrange';
+
+import AppProvider from './context/AppProvider';
 import App from './App';
 
 Amplify.configure(config);
@@ -59,9 +61,9 @@ const WithProvider = () => (
   <ApolloProvider client={client}>
     <Rehydrated>
       <MuiThemeProvider theme={theme}>
-        <React.Fragment>
+        <AppProvider>
           <App />
-        </React.Fragment>
+        </AppProvider>
       </MuiThemeProvider>
     </Rehydrated>
   </ApolloProvider>
