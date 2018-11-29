@@ -3,6 +3,8 @@ import SignUp from './SignUp';
 import SignIn from './SignIn';
 import Dashboard from './views/Dashboard';
 import Workout from './views/Workout';
+import ExerciseDef from './views/ExerciseDef';
+import AddExercise from './views/AddExercise';
 import WeightChart from './views/Charts/WeightChart';
 import BodyWeightChart from './views/Charts/BodyWeightChart';
 import CardioChart from './views/Charts/CardioChart';
@@ -90,6 +92,8 @@ const App = () => (
       <PrivateRoute exact path="/weights/:name/:workoutId" component={WeightChart} />
       <PrivateRoute exact path="/body-weight/:name/:workoutId" component={BodyWeightChart} />
       <PrivateRoute exact path="/cardio/:name/:workoutId" component={CardioChart} />
+      <PrivateRoute exact path="/exercise-def" component={ExerciseDef} />
+      <PrivateRoute exact path="/add-exercise/:userId/:workoutId/:date" component={AddExercise} />
     </Switch>
   </Router>
 )
