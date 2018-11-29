@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { Query } from 'react-apollo'
 import { getUserWorkouts, getWorkoutInfo } from '../../../queries';
-// import { Mutation } from 'react-apollo'
-// import { DELETE_WORKOUT } from '../../../mutations';
+import { Mutation } from 'react-apollo'
+import { DELETE_WORKOUT } from '../../../mutations';
 import { withStyles, withWidth, Button, Paper, List, ListSubheader } from '@material-ui/core';
 import grey from '@material-ui/core/colors/grey';
 import WorkoutInfo from './WorkoutInfo'
@@ -97,27 +97,27 @@ class WorkoutList extends Component {
                             variant="contained"
                             color="primary"
                           >View Details</Button> 
-                          : null
-                          // <Mutation mutation={DELETE_WORKOUT}
-                          //   refetchQueries={() => {
-                          //     return [{ query: getUserWorkouts }];
-                          //   }}
-                          // >
-                          //   {deleteWorkout => (
-                          //     <Button {...buttonProps} 
-                          //       color="primary" 
-                          //       variant="contained"
-                          //       onClick={() => deleteWorkout({ 
-                          //         variables: {
-                          //           input: {
-                          //             id: workout.id
-                          //           }
-                          //         }
-                          //     })}>
-                          //       Remove
-                          //     </Button>
-                          //   )}
-                          // </Mutation>
+                          :
+                          <Mutation mutation={DELETE_WORKOUT}
+                            refetchQueries={() => {
+                              return [{ query: getUserWorkouts }];
+                            }}
+                          >
+                            {deleteWorkout => (
+                              <Button {...buttonProps} 
+                                color="primary" 
+                                variant="contained"
+                                onClick={() => deleteWorkout({ 
+                                  variables: {
+                                    input: {
+                                      id: workout.id
+                                    }
+                                  }
+                              })}>
+                                Remove
+                              </Button>
+                            )}
+                          </Mutation>
                         }
                         </div>
                       </ListSubheader>

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { withStyles } from '@material-ui/core/styles'
 import { Query } from 'react-apollo'
 import { getUserWorkouts } from '../../queries';
-// import { Mutation } from 'react-apollo'
-// import { ADD_WORKOUT } from '../../mutations';
+import { Mutation } from 'react-apollo'
+import { ADD_WORKOUT } from '../../mutations';
 import Button from '@material-ui/core/Button';
 import Header from '../../shared/Header';
 import WorkoutList from './components/WorkoutList';
@@ -50,7 +50,7 @@ class Dashboard extends Component {
           <div>
             <Header name={ global.username || '' } />
             <div>
-              {/* <Mutation mutation={ADD_WORKOUT}
+              <Mutation mutation={ADD_WORKOUT}
                 refetchQueries={() => {
                   return [{ query: getUserWorkouts }];
                 }}
@@ -60,7 +60,7 @@ class Dashboard extends Component {
                     onClick={() => createWorkout({ 
                       variables: {
                         input: {
-                          userId: match.params.userId,
+                          userId: global.username || '',
                           date: moment().format('YYYY-MM-DD')
                         }
                       }
@@ -68,7 +68,7 @@ class Dashboard extends Component {
                     Add Workout
                   </Button>
                 )}
-              </Mutation> */}
+              </Mutation>
               <Button color="primary" autoFocus 
                     onClick={() => {
                       Auth.signOut()
