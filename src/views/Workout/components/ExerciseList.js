@@ -64,7 +64,7 @@ class ExerciseList extends Component {
                   <div className={classes.subHeaderButton}>
                   <Button
                     onClick={ () => this.compareNav(exercise.category, exercise.name, exercise.workoutId) }
-                    variant="raised"
+                    variant="contained"
                     color="primary"
                   >Compare</Button>
                   </div>

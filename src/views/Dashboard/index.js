@@ -99,7 +99,7 @@ class Dashboard extends Component {
   render() {
     const { classes } = this.props
     const { global, dispatch } = this.context;
-    const dashboard = global.userId ? this.renderDashboard( global.userId, classes ) : <div>No User Data Found</div>
+    const dashboard = global.userId ? this.renderDashboard( global.userId, classes ) : null
 
     console.log('global state', global)
 

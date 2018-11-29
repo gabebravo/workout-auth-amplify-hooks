@@ -3,6 +3,9 @@ import SignUp from './SignUp';
 import SignIn from './SignIn';
 import Dashboard from './views/Dashboard';
 import Workout from './views/Workout';
+import WeightChart from './views/Charts/WeightChart';
+import BodyWeightChart from './views/Charts/BodyWeightChart';
+import CardioChart from './views/Charts/CardioChart';
 import NotSignedIn from './shared/NotSignedIn';
 
 import {
@@ -84,6 +87,9 @@ const App = () => (
       <Route path='/not-signed-in' component={NotSignedIn} />
       <PrivateRoute path='/dashboard' component={Dashboard} />
       <PrivateRoute path='/workout/:workoutId' component={Workout} />
+      <PrivateRoute exact path="/weights/:name/:workoutId" component={WeightChart} />
+      <PrivateRoute exact path="/body-weight/:name/:workoutId" component={BodyWeightChart} />
+      <PrivateRoute exact path="/cardio/:name/:workoutId" component={CardioChart} />
     </Switch>
   </Router>
 )
