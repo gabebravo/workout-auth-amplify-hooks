@@ -1,5 +1,5 @@
 import React from "react";
-import { produce } from "immer";
+import { useImmerReducer } from "use-immer";
 import { AppContext } from "./AppContext";
 
 const DEFAULT_VALUES = {
@@ -9,15 +9,9 @@ const DEFAULT_VALUES = {
     exerciseName: null
 }
 
-// https://github.com/mweststrate/use-immer/blob/master/index.js
-function useImmerReducer(reducer, initialState) {
-  return React.useReducer(produce(reducer), initialState);
-}
-
 const globalReducer = (global, action) => {
   switch (action.type) {
     case "SET_VALUE":
-    //   todos[action.i].complete = !todos[action.i].complete;
         global[action.key] = action.value;
       return;
     case "RESET":

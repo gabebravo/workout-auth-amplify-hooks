@@ -5003,7 +5003,7 @@ immer@1.7.2:
   resolved "https://registry.yarnpkg.com/immer/-/immer-1.7.2.tgz#a51e9723c50b27e132f6566facbec1c85fc69547"
   integrity sha512-4Urocwu9+XLDJw4Tc6ZCg7APVjjLInCFvO4TwGsAYV5zT6YYSor14dsZR0+0tHlDIN92cFUOq+i7fC00G5vTxA==
 
-immer@^1.8.0:
+immer@^1.7.3:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/immer/-/immer-1.8.0.tgz#afa8393996a1f3f5255019e7d10c29d42dd95225"
   integrity sha512-zOox8DNAunPeQgKwbAiwEUAHhZXtMPZo7VZ7m7h9cpQL1I35bAeaxMfwYyLEIt6RZUelFfsOBfG1GJu/iQNgxw==
@@ -10091,6 +10091,13 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
+
+use-immer@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/use-immer/-/use-immer-0.0.5.tgz#fc9919ac8d158e7b4d9dd4b3de977d3de319fca1"
+  integrity sha512-TJFKixLdb19c6fLTZsqMMKiX3rR6T6hqnPSHoRP0OsF/sUuSdjLUqu0MXXc//aR6XpcOPUJc8VKdak9AwNVldw==
+  dependencies:
+    immer "^1.7.3"
 
 use@^3.1.0:
   version "3.1.1"
