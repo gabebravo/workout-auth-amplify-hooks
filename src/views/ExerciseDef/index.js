@@ -252,7 +252,7 @@ class ExerciseDef extends Component {
             <Button
               onClick={this.submit}
               fullWidth
-              variant="raised"
+              variant="contained"
               color="primary"
               className={classes.submit}
             >
