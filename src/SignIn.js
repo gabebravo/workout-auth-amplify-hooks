@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import { Auth } from 'aws-amplify';
 import PropTypes from 'prop-types';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { Avatar, Button, CssBaseline, FormControl, Input, InputLabel, 
+  Paper, Typography, withStyles, Dialog, DialogTitle, DialogContent, 
+  DialogContentText, DialogActions } from '@material-ui/core'
 import Header from './shared/Header';
-import { withRouter } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
   layout: {
@@ -53,7 +47,9 @@ class SignIn extends Component {
         password: '',
         showConfirmation: false,
         user: {},
-        authCode: ''
+        authCode: '',
+        showModal: false,
+        modalMessage: ''
     }
 
   fieldHandler = evt => {
@@ -66,7 +62,9 @@ class SignIn extends Component {
       .then(user => {
         this.setState({ user, showConfirmation: true })
       })
-      .catch(err => console.log('error signing in...: ', err))
+      .catch(err => {
+        this.setState({ showModal: true, modalMessage: err.message })
+      })
   }
 
   confirmSignIn = () => {
@@ -78,12 +76,28 @@ class SignIn extends Component {
       .catch(err => console.log('error confirming signing in...: ', err))
   }
 
+  handleClose = () => this.setState({ showModal: false, modalMessage: '' })
+
     render() {
       const { classes } = this.props;
-      const { username, password, email, phone_number, authCode } = this.state;
+      const { username, password, authCode } = this.state;
 
+      console.log(this.state)
       return (
         <React.Fragment>
+          {
+            this.state.showModal ? (
+              <Dialog open={this.state.showModal} onClose={this.handleClose}>
+                <DialogTitle>Oops...</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>{this.state.modalMessage}</DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.handleClose} color="primary" autoFocus>OK</Button>
+                </DialogActions>
+              </Dialog>
+            ) : null
+          }
         <CssBaseline />
         <Header />
         <main className={classes.layout}>

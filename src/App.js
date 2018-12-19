@@ -78,9 +78,6 @@ class PrivateRoute extends React.Component {
 
 PrivateRoute = withRouter(PrivateRoute)
 
-// TODO - NO MORE PAGE REFERESHING OR BOOKMARKING
-// IF A VALUE IS NOT THERE ON A REFRESH - REDIRECT THEM BACK TO DASHBOARD
-
 const App = () => (
   <Router>
     <Switch>
