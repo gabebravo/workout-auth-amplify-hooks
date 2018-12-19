@@ -131,7 +131,7 @@ class SignIn extends Component {
               </>
             ) : (
               <>
-                <Typography>Sign Up</Typography>
+                <Typography>Sign In</Typography>
                 <form className={classes.form}>
                   <FormControl margin="normal" fullWidth required>
                     <InputLabel htmlFor="authCode">Confirm Sign In</InputLabel>

@@ -66,7 +66,7 @@ class PrivateRoute extends React.Component {
           ) : (
             <Redirect
               to={{
-                pathname: "/",
+                pathname: "/auth",
               }}
             />
           )
@@ -82,7 +82,7 @@ PrivateRoute = withRouter(PrivateRoute)
 const App = () => (
   <Router>
     <Switch>
-      <Route path='/' component={Authenticator} />
+      <Route path='/auth' component={Authenticator} />
       <Route path='/not-signed-in' component={NotSignedIn} />
       <PrivateRoute path='/dashboard' component={Dashboard} />
       <PrivateRoute path='/workout/:workoutId' component={Workout} />
