@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import { Auth } from 'aws-amplify';
 import PropTypes from 'prop-types';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Header from './shared/Header';
-import { withRouter } from "react-router-dom";
+import { Avatar, Button, CssBaseline, FormControl, Input, InputLabel, 
+  Paper, Typography, withStyles, Dialog, DialogTitle, DialogContent, 
+  DialogContentText, DialogActions } from '@material-ui/core'
+import Header from '../shared/Header';
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
   layout: {
@@ -46,50 +40,63 @@ const styles = theme => ({
   },
 });
 
-class SignUp extends Component {
+class SignIn extends Component {
 
-  state = {
-    username: '',
-    password: '',
-    email: '',
-    phone_number: '',
-    authCode: '',
-    showConfirmation: false
-  }
+    state = {
+        username: '',
+        password: '',
+        showConfirmation: false,
+        user: {},
+        authCode: '',
+        showModal: false,
+        modalMessage: ''
+    }
 
   fieldHandler = evt => {
     const { name, value } = evt.target;
     this.setState({ [name]: value })
   }
 
-  signUp = () => {
-    console.log('state', this.state)
-    const { username, password, email, phone_number } = this.state
-    Auth.signUp({
-      username,
-      password,
-      attributes: {
-        email,
-        phone_number
-      }
-    })
-    .then(() => this.setState({ showConfirmation: true }))
-    .catch(err => console.log('error signing up: ', err))
+  signIn = () => {
+    Auth.signIn(this.state.username, this.state.password)
+      .then(user => {
+        this.setState({ user, showConfirmation: true })
+      })
+      .catch(err => {
+        this.setState({ showModal: true, modalMessage: err.message })
+      })
   }
 
-  confirmSignUp = () => {
-    console.log('state', this.state)
-    Auth.confirmSignUp(this.state.username, this.state.authCode)
-    .then(() => this.props.history.push('/signin'))
-    .catch(err => console.log('error confirming signing up: ', err))
+  confirmSignIn = () => {
+    const { history } = this.props
+    Auth.confirmSignIn(this.state.user, this.state.authCode, this.state.user.challengeName)
+      .then(user => {
+        history.push('/dashboard')
+      })
+      .catch(err => console.log('error confirming signing in...: ', err))
   }
+
+  handleClose = () => this.setState({ showModal: false, modalMessage: '' })
 
     render() {
       const { classes } = this.props;
-      const { username, password, email, phone_number, authCode } = this.state;
+      const { username, password, authCode } = this.state;
 
       return (
         <React.Fragment>
+          {
+            this.state.showModal ? (
+              <Dialog open={this.state.showModal} onClose={this.handleClose}>
+                <DialogTitle>Oops...</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>{this.state.modalMessage}</DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.handleClose} color="primary" autoFocus>OK</Button>
+                </DialogActions>
+              </Dialog>
+            ) : null
+          }
         <CssBaseline />
         <Header />
         <main className={classes.layout}>
@@ -99,7 +106,7 @@ class SignUp extends Component {
             </Avatar>
             { !this.state.showConfirmation ? (
               <>
-                <Typography>Sign Up</Typography>
+                <Typography>Sign In</Typography>
                 <form className={classes.form}>
                   <FormControl margin="normal" fullWidth required>
                     <InputLabel htmlFor="username">Username</InputLabel>
@@ -107,28 +114,18 @@ class SignUp extends Component {
                       onChange={this.fieldHandler} />
                   </FormControl>
                   <FormControl margin="normal" fullWidth required>
-                    <InputLabel htmlFor="email">Email Address</InputLabel>
-                    <Input value={email} name="email" autoComplete="email" 
-                      type="email" onChange={this.fieldHandler} />
-                  </FormControl>
-                  <FormControl margin="normal" fullWidth required>
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <Input value={password} name="password" autoComplete="password"
                       type="password" onChange={this.fieldHandler} />
                   </FormControl>
-                  <FormControl margin="normal" fullWidth required>
-                    <InputLabel htmlFor="phone_number">Phone Number</InputLabel>
-                    <Input value={phone_number} name="phone_number" autoComplete="phone_number" 
-                      onChange={this.fieldHandler} />
-                  </FormControl>
                   <Button
-                    onClick={ () => this.signUp() }
+                    onClick={ () => this.signIn() }
                     fullWidth
                     variant="contained"
                     color="primary"
                     className={classes.submit}
                   >
-                    Save
+                    Login
                   </Button>
                 </form>
               </>
@@ -137,12 +134,12 @@ class SignUp extends Component {
                 <Typography>Sign Up</Typography>
                 <form className={classes.form}>
                   <FormControl margin="normal" fullWidth required>
-                    <InputLabel htmlFor="authCode">Confirmation Code</InputLabel>
+                    <InputLabel htmlFor="authCode">Confirm Sign In</InputLabel>
                     <Input value={authCode} name="authCode" autoComplete="authCode" autoFocus
                       onChange={this.fieldHandler} />
                   </FormControl>
                   <Button
-                    onClick={ () => this.confirmSignUp() }
+                    onClick={ () => this.confirmSignIn() }
                     fullWidth
                     variant="contained"
                     color="primary"
@@ -160,8 +157,8 @@ class SignUp extends Component {
     } 
 }
 
-SignUp.propTypes = {
+SignIn.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withRouter(withStyles(styles)(SignUp));
+export default withRouter(withStyles(styles)(SignIn));

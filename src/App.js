@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import SignUp from './SignUp';
-import SignIn from './SignIn';
+import SignUp from './auth/SignUp';
+import SignIn from './auth/SignIn';
+import Authenticator from './auth/Authenticator'
 import Dashboard from './views/Dashboard';
 import Workout from './views/Workout';
 import ExerciseDef from './views/ExerciseDef';
@@ -65,7 +66,7 @@ class PrivateRoute extends React.Component {
           ) : (
             <Redirect
               to={{
-                pathname: "/signin",
+                pathname: "/auth",
               }}
             />
           )
@@ -81,8 +82,7 @@ PrivateRoute = withRouter(PrivateRoute)
 const App = () => (
   <Router>
     <Switch>
-      <Route path='/signup' component={SignUp} />
-      <Route path='/signin' component={SignIn} />
+      <Route path='/auth' component={Authenticator} />
       <Route path='/not-signed-in' component={NotSignedIn} />
       <PrivateRoute path='/dashboard' component={Dashboard} />
       <PrivateRoute path='/workout/:workoutId' component={Workout} />
