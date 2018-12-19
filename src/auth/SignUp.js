@@ -80,7 +80,7 @@ class SignUp extends Component {
   confirmSignUp = () => {
     console.log('state', this.state)
     Auth.confirmSignUp(this.state.username, this.state.authCode)
-    .then(() => this.props.history.push('/signin'))
+    .then(() => this.props.redirect(true))
     .catch(err => console.log('error confirming signing up: ', err))
   }
 

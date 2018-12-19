@@ -11,7 +11,7 @@ class Authenticator extends React.Component {
 
   state = {
     showSignIn: true,
-    value: 2
+    value: 0
   }
 
   switchState = showSignIn => {
@@ -31,7 +31,7 @@ class Authenticator extends React.Component {
           showSignIn ? (
             <SignIn />
           ) : (
-            <SignUp />
+            <SignUp redirect={this.switchState} />
           )
         }
         <Tabs centered

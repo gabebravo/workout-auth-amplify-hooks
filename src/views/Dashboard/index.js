@@ -73,8 +73,7 @@ class Dashboard extends Component {
                     onClick={() => {
                       Auth.signOut()
                         .then(() => {
-                          // this.props.history.push('/auth')
-                          this.props.history.push('/signin')
+                          this.props.history.push('/auth')
                           console.log('sign out')
                         })
                         .catch(() => console.log('error signing out...'))
