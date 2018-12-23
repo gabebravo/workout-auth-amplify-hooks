@@ -59,18 +59,34 @@ class SignUp extends Component {
 
   fieldHandler = evt => {
     const { name, value } = evt.target;
-    this.setState({ [name]: value })
+    const finalValue = name === 'phone_number' ? this.phoneRenderFormat(value) : value;
+    this.setState({ [name]: finalValue })
+  }
+
+  phoneRenderFormat = number => {
+    const phoneRegex = /(\d{0,3})(\d{0,3})(\d{0,4})/;
+    let ph = number.replace(/\D/g, '').match(phoneRegex);
+    ph = !ph[2] ? ph[1] : '(' + ph[1] + ') ' + ph[2] + (ph[3] ? '-' + ph[3] : '');
+    return ph;
   }
 
   signUp = () => {
-    console.log('state', this.state)
     const { username, password, email, phone_number } = this.state
+    const reformatPhone = phone_number.split('').reduce( (acc, char) => {
+      if( char !== '(' && char !== ')' && char !== '-' && char !== ' ') {
+        acc += char;
+      }
+      return acc;
+    }, '')
+
+    const finalPhone = `+01${reformatPhone}`;
+    
     Auth.signUp({
       username,
       password,
       attributes: {
         email,
-        phone_number
+        phone_number: finalPhone
       }
     })
     .then(() => this.setState({ showConfirmation: true }))
