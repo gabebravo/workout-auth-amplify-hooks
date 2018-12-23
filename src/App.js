@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import SignUp from './auth/SignUp';
-import SignIn from './auth/SignIn';
+import React from 'react';
 import Authenticator from './auth/Authenticator'
 import Dashboard from './views/Dashboard';
 import Workout from './views/Workout';
@@ -56,6 +54,7 @@ class PrivateRoute extends React.Component {
     const { component: Component, ...rest } = this.props
     const { loaded , isAuthenticated} = this.state
 
+    console.log('isAuthenticated', isAuthenticated)
     if (!loaded) return null
     return (
       <Route

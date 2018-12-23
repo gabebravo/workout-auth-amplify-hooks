@@ -1,5 +1,4 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { withRouter } from 'react-router-dom'
@@ -10,20 +9,22 @@ import SignUp from './SignUp'
 class Authenticator extends React.Component {
 
   state = {
-    showSignIn: true,
-    value: 0
+    showSignIn: true
   }
 
   switchState = showSignIn => {
+    console.log('showSignIn', showSignIn)
     this.setState({ showSignIn })
   }
 
-  handleChange = (event, value) => {
+  handleChange = value => {
     this.setState({ value });
   };
 
   render() {
     const { showSignIn } = this.state
+    const tabIndex = showSignIn ? 0 : 1;
+    console.log('tabIndex', tabIndex)
 
     return (
       <div>
@@ -35,7 +36,7 @@ class Authenticator extends React.Component {
           )
         }
         <Tabs centered
-            value={this.state.value}
+            value={tabIndex}
             indicatorColor="primary"
             textColor="primary"
             onChange={this.handleChange}
