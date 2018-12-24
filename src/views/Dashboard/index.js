@@ -30,10 +30,8 @@ class Dashboard extends Component {
 
     Auth.currentUserInfo()
       .then( async data => {
-        // ON PAGE REFRESH CHECK FOR DATA WHEN YOU GET HERE
-          console.log('userData', data)
-          await dispatch({ type: "SET_VALUE", key: 'userId', value: data.attributes.sub } )
-          await dispatch({ type: "SET_VALUE", key: 'username', value: data.username } )
+        await dispatch({ type: "SET_VALUE", key: 'userId', value: data.attributes.sub } )
+        await dispatch({ type: "SET_VALUE", key: 'username', value: data.username } )
       })
       .catch(err => console.log('error: ', err))
   }
@@ -45,7 +43,6 @@ class Dashboard extends Component {
     return (
       <Query query={getUserWorkouts} variables={{ id: userId }}>
         {({ data }) => {
-          console.log('data', data)
           return (
           <div>
             <Header name={ global.username || '' } />
@@ -74,7 +71,6 @@ class Dashboard extends Component {
                       Auth.signOut()
                         .then(() => {
                           this.props.history.push('/auth')
-                          console.log('sign out')
                         })
                         .catch(() => console.log('error signing out...'))
                     }}>
@@ -99,9 +95,6 @@ class Dashboard extends Component {
     const { classes } = this.props
     const { global } = this.context;
     const dashboard = global.userId ? this.renderDashboard( global.userId, classes ) : null
-
-    console.log('global state', global)
-
     return dashboard;
   }
 }

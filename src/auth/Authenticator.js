@@ -13,7 +13,6 @@ class Authenticator extends React.Component {
   }
 
   switchState = showSignIn => {
-    console.log('showSignIn', showSignIn)
     this.setState({ showSignIn })
   }
 
@@ -24,7 +23,6 @@ class Authenticator extends React.Component {
   render() {
     const { showSignIn } = this.state
     const tabIndex = showSignIn ? 0 : 1;
-    console.log('tabIndex', tabIndex)
 
     return (
       <div>

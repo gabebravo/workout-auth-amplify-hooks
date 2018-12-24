@@ -30,7 +30,7 @@ class PrivateRoute extends React.Component {
     this.authenticate()
     this.unlisten = this.props.history.listen(() => {
       Auth.currentAuthenticatedUser()
-        .then(user => console.log('user: ', user))
+        .then(user => console.log('authed'))
         .catch(() => {
           if (this.state.isAuthenticated) this.setState({ isAuthenticated: false })
         })
@@ -50,11 +50,9 @@ class PrivateRoute extends React.Component {
   }
 
   render() {
-
     const { component: Component, ...rest } = this.props
     const { loaded , isAuthenticated} = this.state
 
-    console.log('isAuthenticated', isAuthenticated)
     if (!loaded) return null
     return (
       <Route
