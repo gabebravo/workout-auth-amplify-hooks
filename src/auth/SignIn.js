@@ -44,7 +44,7 @@ const styles = theme => ({
 const SignIn = ({ classes, history }) => {
 
   const { fieldsObj, fieldSetter } = signInHooks();
-  const { username, password, showConfirmation,user, authCode, showModal, modalMessage } = fieldsObj;
+  const { username, password, showConfirmation, user, authCode, showModal, modalMessage } = fieldsObj;
 
   function fieldHandler(evt){
     const { name, value } = evt.target;
@@ -54,7 +54,7 @@ const SignIn = ({ classes, history }) => {
   function signIn(){
     Auth.signIn(username, password)
       .then(user => {
-        fieldSetter({ user, showConfirmation: true })
+        fieldSetter({ ...fieldsObj, user, showConfirmation: true })
       })
       .catch(err => {
         fieldSetter({ ...fieldsObj, showModal: true, modalMessage: err.message })
