@@ -2,7 +2,7 @@ import React from 'react';
 import { Auth } from 'aws-amplify';
 import PropTypes from 'prop-types';
 import { Avatar, Button, CssBaseline, FormControl, Input, 
-  InputLabel, Paper, Typography,withStyles } from '@material-ui/core';
+  InputLabel, Paper, Typography, withStyles } from '@material-ui/core';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Header from '../shared/Header';
 import { signUpHooks } from '../hooks'
@@ -37,6 +37,9 @@ const styles = theme => ({
   submit: {
     marginTop: theme.spacing.unit * 3,
   },
+  typography: {
+    fontSize: '1.25rem'
+  }
 });
 
 const phoneRenderFormat = number => {
