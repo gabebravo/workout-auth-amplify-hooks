@@ -1,17 +1,32 @@
+import { useState } from "react";
 
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
+// SIGN UP FORM HOOKS
+const signupState = {
+  username: '',
+  password: '',
+  email: '',
+  phone_number: '',
+  authCode: '',
+  showConfirmation: false
+}
 
-const initialState = {
-    username: '',
-    password: '',
-    email: '',
-    phone_number: '',
-    authCode: '',
-    showConfirmation: false
-  }
+export const signUpHooks = () => {
+  const [fieldsObj, fieldSetter] = useState(signupState);
+  return { fieldsObj, fieldSetter };
+};
 
-  export const signUpHooks = () => {
-    const [fieldsObj, fieldSetter] = useState(initialState);
-    return { fieldsObj, fieldSetter };
-  };
+// SIGN IN FORM HOOKS
+const signinState = {
+  username: '',
+  password: '',
+  showConfirmation: false,
+  user: {},
+  authCode: '',
+  showModal: false,
+  modalMessage: ''
+}
+
+export const signInHooks = () => {
+  const [fieldsObj, fieldSetter] = useState(signinState);
+  return { fieldsObj, fieldSetter };
+};
