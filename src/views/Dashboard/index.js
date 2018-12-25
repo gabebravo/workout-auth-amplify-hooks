@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { withStyles } from '@material-ui/core/styles'
 import { Query } from 'react-apollo'
 import { getUserWorkouts } from '../../queries';
 import { Mutation } from 'react-apollo'
 import { ADD_WORKOUT } from '../../mutations';
-import Button from '@material-ui/core/Button';
+import { Button, withStyles } from '@material-ui/core';
 import Header from '../../shared/Header';
 import WorkoutList from './components/WorkoutList';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -40,8 +39,14 @@ class Dashboard extends Component {
     const { classes } = this.props
     const { global } = this.context;
 
+    console.log('global.userId', global.userId )
+
     return (
-      <Query query={getUserWorkouts} variables={{ id: userId }}>
+      <Query query={getUserWorkouts} variables={{ filter: {
+        userId: {
+          eq: global.userId || null
+        }
+      }}}>
         {({ data }) => {
           return (
           <div>
@@ -49,15 +54,19 @@ class Dashboard extends Component {
             <div>
               <Mutation mutation={ADD_WORKOUT}
                 refetchQueries={() => {
-                  return [{ query: getUserWorkouts }];
+                  return [{ query: getUserWorkouts, variables: ({ filter: {
+                    userId: {
+                      eq: global.userId || null
+                    }
+                  }}) }];
                 }}
               >
                 {createWorkout => (
                   <Button color="primary" autoFocus 
-                    onClick={() => createWorkout({ 
+                    onClick={() => createWorkout({
                       variables: {
                         input: {
-                          userId: global.username || '',
+                          userId: global.userId || 'mike_hancho',
                           date: moment().format('YYYY-MM-DD')
                         }
                       }
@@ -84,6 +93,10 @@ class Dashboard extends Component {
                   <LinearProgress color="secondary" /><br />
                   <LinearProgress /><br />
                 </div>
+            }
+            {
+              data.listWorkouts && data.listWorkouts.items && data.listWorkouts.items === 0 ? 
+                <div style={{ fontSize: '5rem' }} >Add Workout</div> : null
             }
           </div>
         )}}

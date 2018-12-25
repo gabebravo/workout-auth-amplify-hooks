@@ -1,15 +1,15 @@
 import gql from 'graphql-tag';
 
-export const getUserInfo = gql`
-  query ($id: ID!) {
-    getUser(id: $id) {
-      id
-      email
-      firstName
-      lastName
-      password
-    }
-}`;
+// export const getUserInfo = gql`
+//   query ($id: ID!) {
+//     getUser(id: $id) {
+//       id
+//       email
+//       firstName
+//       lastName
+//       password
+//     }
+// }`;
 
 export const getUserWorkouts = gql`
 query($filter: TableWorkoutFilterInput){
