@@ -54,7 +54,8 @@ class Dashboard extends Component {
             <div>
               <Mutation mutation={ADD_WORKOUT}
                 refetchQueries={() => {
-                  return [{ query: getUserWorkouts, variables: ({ filter: {
+                  return [{ query: getUserWorkouts, variables: 
+                    ({ filter: {
                     userId: {
                       eq: global.userId || null
                     }
@@ -88,7 +89,7 @@ class Dashboard extends Component {
             </div>
             {
               data.listWorkouts && data.listWorkouts.items ? 
-                <WorkoutList workouts={ this.sortWorkouts(data.listWorkouts.items) } /> : 
+                <WorkoutList workouts={ this.sortWorkouts(data.listWorkouts.items) } dashId={global.userId} /> : 
                 <div className={classes.root}>
                   <LinearProgress color="secondary" /><br />
                   <LinearProgress /><br />

@@ -55,12 +55,11 @@ class WorkoutList extends Component {
   }
 
   workoutNav = id => {
-    
     this.props.history.push(`/workout/${id}`);
   }
 
   render() {
-    const { classes, workouts, width } = this.props;
+    const { classes, workouts, width, dashId } = this.props;
     const isSmallScreen = /xs|sm/.test(width);
     const buttonProps = {
       size: isSmallScreen ? "small" : "large"
@@ -100,7 +99,11 @@ class WorkoutList extends Component {
                           :
                           <Mutation mutation={DELETE_WORKOUT}
                             refetchQueries={() => {
-                              return [{ query: getUserWorkouts }];
+                              return [{ query: getUserWorkouts, variables: ({ filter: {
+                                userId: {
+                                  eq: dashId || null
+                                }
+                              }}) }];
                             }}
                           >
                             {deleteWorkout => (
