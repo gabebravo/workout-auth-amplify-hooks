@@ -39,8 +39,6 @@ class Dashboard extends Component {
     const { classes } = this.props
     const { global } = this.context;
 
-    console.log('global.userId', global.userId )
-
     return (
       <Query query={getUserWorkouts} variables={{ filter: {
         userId: {
