@@ -91,10 +91,10 @@ class AddExercise extends Component {
     this.setState({ showModal: false });
   };
 
-  dashNav = () => {
-    const { userId } = this.props.match.params
-    this.props.history.push(`/dashboard/${userId}`);
-  }
+  // dashNav = () => {
+  //   const { userId } = this.props.match.params
+  //   this.props.history.push(`/dashboard/${userId}`);
+  // }
 
   submit = () => {
     if( !this.state.category ) {

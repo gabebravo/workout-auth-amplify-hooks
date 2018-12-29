@@ -65,7 +65,7 @@ class Dashboard extends Component {
                     onClick={() => createWorkout({
                       variables: {
                         input: {
-                          userId: global.userId || 'mike_hancho',
+                          userId: global.userId || 'mike_hauncho',
                           date: moment().format('YYYY-MM-DD')
                         }
                       }
