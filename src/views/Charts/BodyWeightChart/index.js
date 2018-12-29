@@ -107,7 +107,7 @@ class BodyWeightChart extends Component {
   }
 
   render() {
-    const { name, workoutId } = this.props.match.params
+    const { name, workoutId, userId } = this.props.match.params
     return (
       <Fragment>
         <Header />
@@ -121,6 +121,9 @@ class BodyWeightChart extends Component {
           filter: {
             name: {
               eq: name
+            },
+            userId: {
+              eq: userId
             }
           }, limit: 10
           }}>
