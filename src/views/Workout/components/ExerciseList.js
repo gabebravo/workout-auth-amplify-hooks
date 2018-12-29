@@ -47,8 +47,8 @@ const styles = theme => ({
 
 class ExerciseList extends Component {
 
-  compareNav = (category, name, workoutId) => {
-    this.props.history.push(`/${category}/${name}/${workoutId}`);
+  compareNav = (category, name, workoutId, userId) => {
+    this.props.history.push(`/${category}/${name}/${workoutId}/${userId}`);
   }
 
   render() {
@@ -63,7 +63,7 @@ class ExerciseList extends Component {
                   <div className={classes.subHeaderText}>{`${exercise.name}`}</div>
                   <div className={classes.subHeaderButton}>
                   <Button
-                    onClick={ () => this.compareNav(exercise.category, exercise.name, exercise.workoutId) }
+                    onClick={ () => this.compareNav(exercise.category, exercise.name, exercise.workoutId, exercise.userId) }
                     variant="contained"
                     color="primary"
                   >Compare</Button>

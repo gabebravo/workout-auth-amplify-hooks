@@ -85,7 +85,7 @@ const App = () => (
       <PrivateRoute path='/workout/:workoutId' component={Workout} />
       <PrivateRoute exact path="/weights/:name/:workoutId" component={WeightChart} />
       <PrivateRoute exact path="/body-weight/:name/:workoutId" component={BodyWeightChart} />
-      <PrivateRoute exact path="/cardio/:name/:workoutId" component={CardioChart} />
+      <PrivateRoute exact path="/cardio/:name/:workoutId/:userId" component={CardioChart} />
       <PrivateRoute exact path="/exercise-def" component={ExerciseDef} />
       <PrivateRoute exact path="/add-exercise/:userId/:workoutId/:date" component={AddExercise} />
     </Switch>
