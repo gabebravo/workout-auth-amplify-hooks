@@ -50,8 +50,8 @@ const styles = theme => ({
 class WorkoutList extends Component {
 
   addExerciseNav = (workoutId, date) => {
-    const { userId } = this.props.match.params
-    this.props.history.push(`/add-exercise/${userId}/${workoutId}/${date}`);
+    const { dashId } = this.props;
+    this.props.history.push(`/add-exercise/${dashId}/${workoutId}/${date}`);
   }
 
   workoutNav = id => {
