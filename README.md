@@ -8,6 +8,7 @@ This project is in production at [Fitness Tracker](http://workout-auth-app.s3-we
 #### Username :
 * at least 1 uppercase letter
 * at least 1 lowercase letter
+* MUST BE at least 6 characters long
 
 #### Password : 
 * at least 1 uppercase letter
