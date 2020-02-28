@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 // SIGN UP FORM HOOKS
 const signupState = {
@@ -7,8 +7,10 @@ const signupState = {
   email: '',
   phone_number: '',
   authCode: '',
-  showConfirmation: false
-}
+  showConfirmation: false,
+  showModal: false,
+  modalMessage: ''
+};
 
 export const signUpHooks = () => {
   const [fieldsObj, fieldSetter] = useState(signupState);
@@ -24,7 +26,7 @@ const signinState = {
   authCode: '',
   showModal: false,
   modalMessage: ''
-}
+};
 
 export const signInHooks = () => {
   const [fieldsObj, fieldSetter] = useState(signinState);
